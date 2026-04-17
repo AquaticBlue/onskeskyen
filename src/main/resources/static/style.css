@@ -211,6 +211,17 @@ footer {
     cursor: pointer;
 }
 
+.wishlist-empty-state {
+    grid-column: span 2;
+    margin: 0;
+    padding: 20px 30px;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-card);
+    font-weight: bold;
+    text-align: center;
+}
+
 .wish-card {
     display: flex;
     flex-direction: column;

@@ -39,9 +39,14 @@
                 </div>
                 <hr>
                 <div class="wishlist-grid">
-                    <a th:href="@{/api/wishlists/{id}(id=1)}" class="wishlist-card">Birthday</a>
-                    <a th:href="@{/api/wishlists/{id}(id=1)}" class="wishlist-card">Christmas</a>
-                    <a th:href="@{/api/wishlists/{id}(id=1)}" class="wishlist-card full-width">Wishes</a>
+                    <a th:each="wishlist, stat : ${myWishlists}"
+                       th:href="@{/api/wishlists/{id}(id=${wishlist.wishlistId})}"
+                       th:text="${wishlist.name}"
+                       th:classappend="${stat.count % 3 == 0} ? ' full-width' : ''"
+                       class="wishlist-card">Wishlist</a>
+                    <p th:if="${#lists.isEmpty(myWishlists)}" class="wishlist-empty-state">
+                        No wishlists yet. Create your first one above.
+                    </p>
                 </div>
             </section>
 

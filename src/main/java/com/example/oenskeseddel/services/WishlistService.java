@@ -6,6 +6,8 @@ import com.example.oenskeseddel.repositories.UserRepository;
 import com.example.oenskeseddel.repositories.WishlistRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WishlistService {
 
@@ -22,6 +24,10 @@ public class WishlistService {
                 .orElseThrow(() -> new RuntimeException("Bruger ikke fundet"));
 
         return wishlistRepository.save(new Wishlist(user, name));
+    }
+
+    public List<Wishlist> getWishlistsForUser(Long userId) {
+        return wishlistRepository.findByUserUserIdOrderByCreatedAtDesc(userId);
     }
 
     public Wishlist findById(Integer wishlistId) {

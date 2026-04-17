@@ -1,99 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Wishlist</title>
     <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
-    <link rel="stylesheet" th:href="@{/opret.css}">
-
+    <link rel="stylesheet" href="../static/opret.css" th:href="@{/opret.css}">
 </head>
 <body>
-<header class="header">
-    <a th:href="@{/}" class="logo">
-        <img src="/images/gift.png" alt="logo">
-        <span>WISHLIST</span>
-    </a>
+    <header class="header">
+        <a th:href="@{/}" class="logo">
+            <img src="/images/gift.png" alt="logo">
+            <span>WISHLIST</span>
+        </a>
 
-    <div class="header-icons">
-        <button type="button" class="icon-btn">
-            <img src="/images/bell-ring.png" alt="Notification">
-        </button>
+        <div class="header-icons">
+            <button type="button" class="icon-btn">
+                <img src="/images/bell-ring.png" alt="Notification">
+            </button>
 
-        <button type="button" class="icon-btn">
-            <img src="/images/user-round.png" alt="Profile">
-        </button>
+            <button type="button" class="icon-btn">
+                <img src="/images/user-round.png" alt="Profile">
+            </button>
 
-        <button type="button" class="login-btn">Login</button>
-    </div>
-</header>
-
-<main>
-    <section class="create-page-container">
-        <div class="create-card">
-            <h1>Create wishlist</h1>
-            <hr>
-
-            <form th:action="@{/createWishlist}" method="post" class="create-form">
-
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text"
-                           id="name"
-                           name="name"
-                           placeholder="e.g. Birthday, Christmas..."
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <select id="category" name="category">
-                        <option value="">Choose category</option>
-                        <option>Birthday</option>
-                        <option>Christmas</option>
-                        <option>Other</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description"
-                              name="description"
-                              placeholder="Write a shot description..."></textarea>
-                </div>
-
-                <input type="hidden" name="userId" value="1">
-
-                <button type="submit" class="create-btn-submit">
-                    Create wishlist
-                </button>
-
-            </form>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <h2>Contact info</h2>
-    <div class="footer-info">
-        <div class="footer-contact">
-            <span>email@example.com</span>
-            <span>+45 12 34 56 78</span>
+            <button type="button" class="login-btn">Login</button>
         </div>
     </header>
 
     <main class="page-main">
-        <section class="form-shell">
-            <div class="form-card">
-                <h1>Create Wishlist</h1>
-                <p>Choose a name and start building a new wishlist.</p>
+        <section class="create-page-container">
+            <div class="create-card">
+                <h1>Create wishlist</h1>
+                <hr>
 
-                <div class="form-row">
-                    <label for="wishlistName">Wishlist name</label>
-                    <input type="text" id="wishlistName" name="wishlistName" placeholder="Birthday, Christmas, Wishes...">
-                </div>
+                <form th:action="@{/createWishlist}" method="post" class="create-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text"
+                               id="name"
+                               name="name"
+                               placeholder="e.g. Birthday, Christmas..."
+                               required>
+                    </div>
 
-                <button type="button" class="form-button">Create wishlist</button>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="">Choose category</option>
+                            <option>Birthday</option>
+                            <option>Christmas</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description"
+                                  name="description"
+                                  placeholder="Write a short description..."></textarea>
+                    </div>
+
+                    <input type="hidden" name="userId" value="1">
+
+                    <button type="submit" class="create-btn-submit">Create wishlist</button>
+                </form>
             </div>
         </section>
     </main>
