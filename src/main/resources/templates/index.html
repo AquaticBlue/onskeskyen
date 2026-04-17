@@ -59,8 +59,14 @@
                 </a>
                 <hr>
                 <div class="wishlist-grid">
-                    <a th:href="@{/wishlist}" class="wishlist-card full-width">50th Birthday</a>
-                    <a th:href="@{/wishlist}" class="wishlist-card full-width">B-day!</a>
+                    <a th:each="wishlist, stat : ${sharedWishlists}"
+                       th:href="@{/wishlist/{username}/share/{id}(username=${wishlist.user.username}, id=${wishlist.wishlistId})}"
+                       th:text="${wishlist.name}"
+                       th:classappend="${stat.count % 3 == 0} ? ' full-width' : ''"
+                       class="wishlist-card">Shared wishlist</a>
+                    <p th:if="${#lists.isEmpty(sharedWishlists)}" class="wishlist-empty-state">
+                        No shared wishlists available yet.
+                    </p>
                 </div>
             </section>
         </div>

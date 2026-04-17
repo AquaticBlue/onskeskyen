@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @Controller
 @RequestMapping("/api/wishlists")
 public class WishlistController {
@@ -28,13 +30,20 @@ public class WishlistController {
     }
 
     @PostMapping("/{wishlistId}/wishes")
-    public Wish createWish(@PathVariable Integer wishlistId, @RequestParam String name) {
-        return wishService.createWish(wishlistId, name);
+    public String createWish(@PathVariable Integer wishlistId,
+                             @RequestParam String name,
+                             @RequestParam(required = false) String brand,
+                             @RequestParam(required = false) String description,
+                             @RequestParam(required = false) BigDecimal price,
+                             @RequestParam(required = false) String link,
+                             @RequestParam(defaultValue = "false") boolean is_favorite) {
+        wishService.createWish(wishlistId, name);
+        return "redirect:/api/wishlists/" + wishlistId;
     }
 
     @GetMapping("/{wishlistId}")
     public String getWishlistPage(@PathVariable Integer wishlistId, Model model) {
-        model.addAttribute("wishlistId", wishlistId);
+        model.addAttribute("wishlist", wishlistService.findById(wishlistId));
         return "wishlist";
     }
 }

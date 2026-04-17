@@ -34,7 +34,7 @@ public class ShareController {
         model.addAttribute("wishlist", wishlist);
         model.addAttribute("username", username);
 
-        return "shared-wishlist";
+        return "shared";
     }
 
 }

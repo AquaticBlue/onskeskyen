@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ønskelister</title>
+    <title>Shared Wishlist</title>
     <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
 </head>
 <body>
@@ -30,21 +30,15 @@
     <div class="detail-header">
         <div>
             <h1 th:text="${wishlist.name}">Wishlist name</h1>
-            <p th:text="'Made: ' + ${#temporals.format(wishlist.createdAt, 'dd/MM-yyyy')} + ', ' + ${#lists.size(wishlist.wishes)} + ' wishes'">Made: dato, 0 wishes</p>
-        </div>
-        <div class="detail-actions">
-            <button type="button" class="share-btn">Share list</button>
-            <button type="button" class="edit-btn">Edit</button>
-            <button type="button" class="delete-btn">Delete list</button>
+            <p>
+                <span th:text="'Shared by ' + ${username}">Shared by username</span>
+                <span th:text="${', ' + #lists.size(wishlist.wishes) + ' wishes'}">, 0 wishes</span>
+            </p>
         </div>
     </div>
 
     <div class="wishes-section">
         <section class="wishes-panel">
-            <div class="panel-header wishes-panel-header">
-                <h2>Wishes</h2>
-                <a th:href="@{/add-wish/{id}(id=${wishlist.wishlistId})}" class="wishes-add-link">+ Add wish</a>
-            </div>
             <div class="wishes-grid">
                 <article th:each="wish, stat : ${wishlist.wishes}"
                          th:classappend="${stat.count % 3 == 0} ? ' full-width' : ''"
@@ -53,26 +47,25 @@
                         <h3 class="wish-card-title" th:text="${wish.name}">Wish name</h3>
                         <p th:if="${wish.brand != null and !#strings.isEmpty(wish.brand)}"
                            th:text="${wish.brand}">Brand</p>
-                        <p th:if="${wish.price != null}"
-                           th:text="${wish.price} + ' kr.'">0 kr.</p>
+                        <p th:if="${wish.description != null and !#strings.isEmpty(wish.description)}"
+                           th:text="${wish.description}">Description</p>
+                        <p th:if="${wish.price != null}" th:text="${wish.price} + ' kr.'">0 kr.</p>
                     </div>
                     <hr>
                     <div class="wish-card-actions">
-                        <button type="button" class="wish-status"
+                        <button type="button"
+                                class="wish-status"
                                 th:text="${wish.reserved} ? 'Reserved' : 'Not reserved'">Not reserved</button>
-                        <div class="wish-card-buttons">
-                            <button type="button" class="edit-btn">Edit</button>
-                            <button type="button" class="delete-btn">Delete</button>
-                        </div>
                     </div>
                 </article>
                 <p th:if="${#lists.isEmpty(wishlist.wishes)}" class="wishlist-empty-state">
-                    No wishes yet. Add your first one above.
+                    This wishlist has no wishes yet.
                 </p>
             </div>
         </section>
     </div>
 </main>
+
 
 <footer>
     <h2>Contact info</h2>
@@ -81,7 +74,7 @@
             <span>email@example.com</span>
             <span>+45 12 34 56 78</span>
         </div>
-        <div class="footer-social-group">
+        <div class="footer-SoMe-group">
             <button type="button" class="footer-social-btn">Facebook</button>
             <button type="button" class="footer-social-btn">Instagram</button>
         </div>
@@ -98,5 +91,6 @@
         </div>
     </div>
 </footer>
+
 </body>
 </html>
