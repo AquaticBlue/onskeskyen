@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS wishes (
                         price DECIMAL(10,2),
                         link VARCHAR(255),
                         is_favorite BOOLEAN,
-                        reserved BOOLEAN,
+                        is_reserved BOOLEAN,
                         FOREIGN KEY (wishlist_id)
                             REFERENCES wishlists(wishlist_id)
                             ON DELETE CASCADE

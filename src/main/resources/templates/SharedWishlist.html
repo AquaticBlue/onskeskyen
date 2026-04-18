@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared wishlists</title>
     <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
-    <link rel="stylesheet" href="../static/shared.css" th:href="@{/shared.css}">
 </head>
 <body>
 
@@ -36,35 +36,25 @@
             </div>
 
             <div class="shared-grid">
-                <div class="shared-card">
+                <a th:each="wishlist : ${sharedWishlists}"
+                   th:href="@{/wishlist/{username}/share/{id}(username=${wishlist.user.username}, id=${wishlist.wishlistId})}"
+                   class="shared-card">
                     <div class="shared-card-header">
                         <img src="/images/user-round.png" alt="shared user">
-                        <h3>50th Birthday</h3>
+                        <h3 th:text="${wishlist.name}">Wishlist name</h3>
                     </div>
 
-                    <p class="shared-by">Shared by Micheal</p>
+                    <p class="shared-by" th:text="'Shared by ' + ${wishlist.user.username}">Shared by username</p>
 
                     <hr>
 
                     <div class="shared-card-footer">
-                        <span>7 wishes</span>
+                        <span th:text="${#lists.size(wishlist.wishes)} + ' wishes'">0 wishes</span>
                     </div>
-                </div>
-
-                <div class="shared-card">
-                    <div class="shared-card-header">
-                        <img src="/images/user-round.png" alt="shared user">
-                        <h3>B-day!</h3>
-                    </div>
-
-                    <p class="shared-by">Shared by Clara </p>
-
-                    <hr>
-
-                    <div class="shared-card-footer">
-                        <span>10 wishes</span>
-                    </div>
-                </div>
+                </a>
+                <p th:if="${#lists.isEmpty(sharedWishlists)}" class="wishlist-empty-state">
+                    No shared wishlists available yet.
+                </p>
             </div>
         </div>
     </section>

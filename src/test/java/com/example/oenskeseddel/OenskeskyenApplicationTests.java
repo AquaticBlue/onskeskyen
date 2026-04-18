@@ -1,4 +1,3 @@
-/*
 package com.example.oenskeseddel;
 
 import com.example.oenskeseddel.models.User;
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,17 +20,17 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class OenskeskyenApplicationTests {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Autowired
-	private WishlistRepository wishlistRepository;
+    @Autowired
+    private WishlistRepository wishlistRepository;
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
-	@Test
+    @Test
     void shouldCreateWishlistForUserId() {
         // Arrange
         WishlistRepository wishlistRepo = mock(WishlistRepository.class);
@@ -38,9 +38,12 @@ class OenskeskyenApplicationTests {
 
         WishlistService service = new WishlistService(wishlistRepo, userRepo);
 
-        Integer userId = 1;
-        User testUser = new User("testuser", "testuser@mail.com", "Test User", "1234");
+        Long userId = 1L;
+        User testUser = new User();
         testUser.setUserId(userId);
+        testUser.setUsername("testuser");
+        testUser.setEmail("testuser@mail.com");
+        testUser.setPassword("1234");
 
         when(userRepo.findById(userId)).thenReturn(Optional.of(testUser));
 
@@ -48,8 +51,28 @@ class OenskeskyenApplicationTests {
         service.createWishlist(userId, "Fødselsdagsgaver");
 
         // Assert
-        verify(userRepo).findById(userId);                 // service must load the user
-        verify(wishlistRepo).save(any(Wishlist.class));    // service must save a wishlist
+        verify(userRepo).findById(userId);
+        verify(wishlistRepo).save(any(Wishlist.class));
+    }
+
+    @Test
+    @Transactional
+    void shouldSaveAndRetrieveWishlist() {
+        // Arrange
+        User user = new User();
+        user.setUsername("integrationuser");
+        user.setEmail("integration@mail.com");
+        user.setPassword("1234");
+        user.setName("Integration User");
+        userRepository.save(user);
+
+        // Act
+        Wishlist wishlist = new Wishlist(user, "Integrationsliste");
+        wishlistRepository.save(wishlist);
+
+        // Assert
+        List<Wishlist> wishlists = wishlistRepository.findByUserUserIdOrderByCreatedAtDesc(user.getUserId());
+        assertFalse(wishlists.isEmpty());
+        assertEquals("Integrationsliste", wishlists.get(0).getName());
     }
 }
-*/

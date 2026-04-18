@@ -1,15 +1,96 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shared Wishlist</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
 </head>
 <body>
+<header class="header">
+    <a th:href="@{/}" class="logo">
+        <img src="/images/gift.png" alt="logo">
+        <span>WISHLIST</span>
+    </a>
 
-<h1 th:text="${username} + '\'s wishlist'"></h1>
+    <div class="header-icons">
+        <button type="button" class="icon-btn">
+            <img src="/images/bell-ring.png" alt="Notification">
+        </button>
 
-<p th:text="${wishlist.name}"></p>
+        <button type="button" class="icon-btn">
+            <img src="/images/user-round.png" alt="Profile">
+        </button>
+
+        <button type="button" class="login-btn">Login</button>
+    </div>
+</header>
+
+<main class="page-main">
+    <div class="detail-header">
+        <div>
+            <h1 th:text="${wishlist.name}">Wishlist name</h1>
+            <p>
+                <span th:text="'Shared by ' + ${username}">Shared by username</span>
+                <span th:text="${', ' + #lists.size(wishlist.wishes) + ' wishes'}">, 0 wishes</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="wishes-section">
+        <section class="wishes-panel">
+            <div class="wishes-grid">
+                <article th:each="wish, stat : ${wishlist.wishes}"
+                         th:classappend="${stat.count % 3 == 0} ? ' full-width' : ''"
+                         class="wish-card">
+                    <div class="wish-card-info">
+                        <h3 class="wish-card-title" th:text="${wish.name}">Wish name</h3>
+                        <p th:if="${wish.brand != null and !#strings.isEmpty(wish.brand)}"
+                           th:text="${wish.brand}">Brand</p>
+                        <p th:if="${wish.description != null and !#strings.isEmpty(wish.description)}"
+                           th:text="${wish.description}">Description</p>
+                        <p th:if="${wish.price != null}" th:text="${wish.price} + ' kr.'">0 kr.</p>
+                    </div>
+                    <hr>
+                    <div class="wish-card-actions">
+                        <button type="button"
+                                class="wish-status"
+                                th:text="${wish.reserved} ? 'Reserved' : 'Not reserved'">Not reserved</button>
+                    </div>
+                </article>
+                <p th:if="${#lists.isEmpty(wishlist.wishes)}" class="wishlist-empty-state">
+                    This wishlist has no wishes yet.
+                </p>
+            </div>
+        </section>
+    </div>
+</main>
 
 
+<footer>
+    <h2>Contact info</h2>
+    <div class="footer-info">
+        <div class="footer-contact">
+            <span>email@example.com</span>
+            <span>+45 12 34 56 78</span>
+        </div>
+        <div class="footer-SoMe-group">
+            <button type="button" class="footer-social-btn">Facebook</button>
+            <button type="button" class="footer-social-btn">Instagram</button>
+        </div>
+    </div>
+    <hr>
+    <div class="footer-collaborators">
+        <div class="collaborators-boxes">
+            <h4>Collaborators:</h4>
+            <div class="partner-box">NIKE</div>
+            <div class="partner-box">Apple</div>
+            <div class="partner-box">Zalando</div>
+            <div class="partner-box">Zalando</div>
+            <div class="partner-box">SAMSUNG</div>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>

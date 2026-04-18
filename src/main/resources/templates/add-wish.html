@@ -33,7 +33,7 @@
             <h1>Add Wish</h1>
             <hr>
 
-            <form th:action="@{/create-wish}" method="post" class="create-form">
+            <form th:action="@{/api/wishlists/{id}/wishes(id=${wishlistId})}" method="post" class="create-form">
 
                 <div class="form-group">
                     <label for="name">Wish</label>
@@ -123,6 +123,7 @@
                 </div>
 
                 <input type="hidden" name="userId" value="1">
+                <input type="hidden" name="wishlistId" th:value="${wishlistId}">
 
                 <button type="submit" class="create-btn-submit">
                     Create wishlist

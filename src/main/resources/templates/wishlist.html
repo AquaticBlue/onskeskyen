@@ -7,122 +7,96 @@
     <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
 </head>
 <body>
-    <header class="header">
-        <a th:href="@{/}" class="logo">
-            <img src="/images/gift.png" alt="logo">
-            <span>WISHLIST</span>
-        </a>
+<header class="header">
+    <a th:href="@{/}" class="logo">
+        <img src="/images/gift.png" alt="logo">
+        <span>WISHLIST</span>
+    </a>
 
-        <div class="header-icons">
-            <button type="button" class="icon-btn">
-                <img src="/images/bell-ring.png" alt="Notification">
-            </button>
+    <div class="header-icons">
+        <button type="button" class="icon-btn">
+            <img src="/images/bell-ring.png" alt="Notification">
+        </button>
 
-            <button type="button" class="icon-btn">
-                <img src="/images/user-round.png" alt="Profile">
-            </button>
+        <button type="button" class="icon-btn">
+            <img src="/images/user-round.png" alt="Profile">
+        </button>
 
-            <button type="button" class="login-btn">Login</button>
+        <button type="button" class="login-btn">Login</button>
+    </div>
+</header>
+
+<main class="page-main">
+    <div class="detail-header">
+        <div>
+            <h1 th:text="${wishlist.name}">Wishlist name</h1>
+            <p th:text="'Made: ' + ${#temporals.format(wishlist.createdAt, 'dd/MM-yyyy')} + ', ' + ${#lists.size(wishlist.wishes)} + ' wishes'">Made: dato, 0 wishes</p>
         </div>
-    </header>
-
-    <main class="page-main">
-        <div class="detail-header">
-            <div>
-                <h1>Birthday</h1>
-                <p>Made: 01/01-2026, 3 wishes</p>
-            </div>
-            <div class="detail-actions">
-                <a th:href="@{/wishlist/{id}/share-link(id=${wishlist.wishlistId})}" class="share-btn">Share list</a>
-                <button type="button" class="edit-btn">Edit</button>
-                <button type="button" class="delete-btn">Delete list</button>
-            </div>
+        <div class="detail-actions">
+            <button type="button" class="share-btn">Share list</button>
+            <button type="button" class="edit-btn">Edit</button>
+            <button type="button" class="delete-btn">Delete list</button>
         </div>
+    </div>
 
-        <div class="wishes-section">
-            <section class="wishes-panel">
-                <div class="panel-header wishes-panel-header">
-                    <h2>Wishes</h2>
-                    <p class="wishes-add-link">+ Add wish</p>
-                </div>
-                <div class="wishes-grid">
-                    <article class="wish-card">
-                        <div class="wish-card-info">
-                            <h3 class="wish-card-title">Nike Air Max</h3>
-                            <p>Nike str. 42</p>
-                            <p>1.299 kr.</p>
-                        </div>
-                        <hr>
-                        <div class="wish-card-actions">
-                            <button type="button" class="wish-status">Not reserved</button>
-                            <div class="wish-card-buttons">
-                                <button type="button" class="edit-btn">Edit</button>
-                                <button type="button" class="delete-btn">Delete</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="wish-card">
-                        <div class="wish-card-info">
-                            <h3 class="wish-card-title">AirPods Pro</h3>
-                            <p>Apple</p>
-                            <p>1.999 kr.</p>
-                        </div>
-                        <hr>
-                        <div class="wish-card-actions">
-                            <button type="button" class="wish-status">Not reserved</button>
-                            <div class="wish-card-buttons">
-                                <button type="button" class="edit-btn">Edit</button>
-                                <button type="button" class="delete-btn">Delete</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="wish-card full-width">
-                        <div class="wish-card-info">
-                            <h3 class="wish-card-title">Lego</h3>
-                            <p>Lego Architecture</p>
-                            <p>799 kr.</p>
-                        </div>
-                        <hr>
-                        <div class="wish-card-actions">
-                            <button type="button" class="wish-status">Reserved</button>
-                            <div class="wish-card-buttons">
-                                <button type="button" class="edit-btn">Edit</button>
-                                <button type="button" class="delete-btn">Delete</button>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
-        </div>
-    </main>
-
-
-    <footer>
-        <h2>Contact info</h2>
-        <div class="footer-info">
-            <div class="footer-contact">
-                <span>email@example.com</span>
-                <span>+45 12 34 56 78</span>
+    <div class="wishes-section">
+        <section class="wishes-panel">
+            <div class="panel-header wishes-panel-header">
+                <h2>Wishes</h2>
+                <a th:href="@{/add-wish/{id}(id=${wishlist.wishlistId})}" class="wishes-add-link">+ Add wish</a>
             </div>
+            <div class="wishes-grid">
+                <article th:each="wish, stat : ${wishlist.wishes}"
+                         th:classappend="${stat.count % 3 == 0} ? ' full-width' : ''"
+                         class="wish-card">
+                    <div class="wish-card-info">
+                        <h3 class="wish-card-title" th:text="${wish.name}">Wish name</h3>
+                        <p th:if="${wish.brand != null and !#strings.isEmpty(wish.brand)}"
+                           th:text="${wish.brand}">Brand</p>
+                        <p th:if="${wish.price != null}"
+                           th:text="${wish.price} + ' kr.'">0 kr.</p>
+                    </div>
+                    <hr>
+                    <div class="wish-card-actions">
+                        <button type="button" class="wish-status"
+                                th:text="${wish.reserved} ? 'Reserved' : 'Not reserved'">Not reserved</button>
+                        <div class="wish-card-buttons">
+                            <button type="button" class="edit-btn">Edit</button>
+                            <button type="button" class="delete-btn">Delete</button>
+                        </div>
+                    </div>
+                </article>
+                <p th:if="${#lists.isEmpty(wishlist.wishes)}" class="wishlist-empty-state">
+                    No wishes yet. Add your first one above.
+                </p>
+            </div>
+        </section>
+    </div>
+</main>
 
-            <div class="footer-social-group">
-                <button type="button" class="footer-social-btn">Facebook</button>
-                <button type="button" class="footer-social-btn">Instagram</button>
-            </div>
+<footer>
+    <h2>Contact info</h2>
+    <div class="footer-info">
+        <div class="footer-contact">
+            <span>email@example.com</span>
+            <span>+45 12 34 56 78</span>
         </div>
-        <hr>
-        <div class="footer-collaborators">
-            <div class="collaborators-boxes">
-                <h4>Collaborators:</h4>
-                <div class="partner-box">NIKE</div>
-                <div class="partner-box">Apple</div>
-                <div class="partner-box">Zalando</div>
-                <div class="partner-box">Zalando</div>
-                <div class="partner-box">SAMSUNG</div>
-            </div>
+        <div class="footer-social-group">
+            <button type="button" class="footer-social-btn">Facebook</button>
+            <button type="button" class="footer-social-btn">Instagram</button>
         </div>
-    </footer>
+    </div>
+    <hr>
+    <div class="footer-collaborators">
+        <div class="collaborators-boxes">
+            <h4>Collaborators:</h4>
+            <div class="partner-box">NIKE</div>
+            <div class="partner-box">Apple</div>
+            <div class="partner-box">Zalando</div>
+            <div class="partner-box">Zalando</div>
+            <div class="partner-box">SAMSUNG</div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
