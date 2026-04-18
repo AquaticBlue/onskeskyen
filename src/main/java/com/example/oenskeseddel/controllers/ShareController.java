@@ -34,7 +34,17 @@ public class ShareController {
         model.addAttribute("wishlist", wishlist);
         model.addAttribute("username", username);
 
-        return "shared-wishlist";
+        return "shared";
+    }
+
+    @GetMapping("/wishlist/{wishlistId}/share-link")
+    public String showShareLinkPage(@PathVariable Integer wishlistId, Model model) {
+        String shareLink = wishlistService.generateShareLink(wishlistId);
+
+        model.addAttribute("shareLink", shareLink);
+        model.addAttribute("wishlistId", wishlistId);
+
+        return "share-link";
     }
 
 }

@@ -34,7 +34,8 @@ public class WishlistController {
 
     @GetMapping("/{wishlistId}")
     public String getWishlistPage(@PathVariable Integer wishlistId, Model model) {
-        model.addAttribute("wishlistId", wishlistId);
+        Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
+        model.addAttribute("wishlist", wishlist);
         return "wishlist";
     }
 }

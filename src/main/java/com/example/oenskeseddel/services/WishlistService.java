@@ -19,6 +19,11 @@ public class WishlistService {
         this.userRepository = userRepository;
     }
 
+    public Wishlist getWishlistById(Integer wishlistId) {
+        return wishlistRepository.findById(wishlistId)
+                .orElseThrow(() -> new RuntimeException("Wishlist not found"));
+    }
+
     public Wishlist createWishlist(long userId, String name) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Bruger ikke fundet"));
