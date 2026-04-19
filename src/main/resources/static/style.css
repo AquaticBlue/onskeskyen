@@ -382,3 +382,30 @@ footer hr {
     margin: 0;
     font-weight: bold;
 }
+
+.wish-favorite {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 24px;
+    color: var(--color-surface-strong);
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.wish-favorite:hover {
+    transform: scale(1.15);
+}
+
+.wish-favorite.is-favorite {
+    color: #d4a017;
+}
+
+span.wish-favorite {
+    cursor: default;
+}
+
+span.wish-favorite:hover {
+    transform: none;
+}

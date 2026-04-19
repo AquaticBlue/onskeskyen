@@ -37,7 +37,7 @@ public class WishlistController {
                              @RequestParam(required = false) BigDecimal price,
                              @RequestParam(required = false) String link,
                              @RequestParam(defaultValue = "false") boolean is_favorite) {
-        wishService.createWish(wishlistId, name);
+        wishService.createWish(wishlistId, name, brand, description, price, link, is_favorite);
         return "redirect:/api/wishlists/" + wishlistId;
     }
 
@@ -46,5 +46,12 @@ public class WishlistController {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
         model.addAttribute("wishlist", wishlist);
         return "wishlist";
+    }
+
+    @PostMapping("/{wishlistId}/wishes/{wishId}/favorite")
+    public String toggleFavorite(@PathVariable Integer wishlistId,
+                                 @PathVariable Integer wishId) {
+        wishService.toggleFavorite(wishId);
+        return "redirect:/api/wishlists/" + wishlistId;
     }
 }

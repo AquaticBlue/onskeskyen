@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import java.math.BigDecimal;
+
 @Service
 public class WishService {
 
@@ -21,13 +23,29 @@ public class WishService {
     }
 
     @Transactional
-    public Wish createWish(Integer wishlistId, String name) {
+    public Wish createWish(Integer wishlistId, String name, String brand,
+                           String description, BigDecimal price, String link,
+                           boolean favorite) {
         Wishlist wishlist = wishlistRepository.findById(wishlistId)
                 .orElseThrow(() -> new EntityNotFoundException("Wishlist ikke fundet: " + wishlistId));
+
         Wish wish = new Wish(wishlist, name);
+        wish.setBrand(brand);
+        wish.setDescription(description);
+        wish.setPrice(price);
+        wish.setLink(link);
+        wish.setFavorite(favorite);
 
         wishlist.addWish(wish);
         wishlistRepository.save(wishlist);
         return wish;
+    }
+
+    @Transactional
+    public Wish toggleFavorite(Integer wishId) {
+        Wish wish = wishRepository.findById(wishId)
+                .orElseThrow(() -> new EntityNotFoundException("Wish ikke fundet: " + wishId));
+        wish.setFavorite(!wish.isFavorite());
+        return wishRepository.save(wish);
     }
 }

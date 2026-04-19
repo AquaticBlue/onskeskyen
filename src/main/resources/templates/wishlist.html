@@ -50,7 +50,17 @@
                          th:classappend="${stat.count % 3 == 0} ? ' full-width' : ''"
                          class="wish-card">
                     <div class="wish-card-info">
-                        <h3 class="wish-card-title" th:text="${wish.name}">Wish name</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 class="wish-card-title" th:text="${wish.name}">Wish name</h3>
+                            <form th:action="@{/api/wishlists/{wishlistId}/wishes/{wishId}/favorite(wishlistId=${wishlist.wishlistId}, wishId=${wish.wishId})}"
+                                  method="post" style="margin: 0;">
+                                <button type="submit"
+                                        class="wish-favorite"
+                                        th:classappend="${wish.favorite} ? ' is-favorite' : ''"
+                                        th:text="${wish.favorite} ? '★' : '☆'"
+                                        th:title="${wish.favorite} ? 'Fjern favorit' : 'Marker som favorit'">☆</button>
+                            </form>
+                        </div>
                         <p th:if="${wish.brand != null and !#strings.isEmpty(wish.brand)}"
                            th:text="${wish.brand}">Brand</p>
                         <p th:if="${wish.price != null}"

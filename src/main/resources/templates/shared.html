@@ -44,7 +44,12 @@
                          th:classappend="${stat.count % 3 == 0} ? ' full-width' : ''"
                          class="wish-card">
                     <div class="wish-card-info">
-                        <h3 class="wish-card-title" th:text="${wish.name}">Wish name</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 class="wish-card-title" th:text="${wish.name}">Wish name</h3>
+                            <span th:if="${wish.favorite}"
+                                  class="wish-favorite is-favorite"
+                                  title="Favorit">★</span>
+                        </div>
                         <p th:if="${wish.brand != null and !#strings.isEmpty(wish.brand)}"
                            th:text="${wish.brand}">Brand</p>
                         <p th:if="${wish.description != null and !#strings.isEmpty(wish.description)}"
