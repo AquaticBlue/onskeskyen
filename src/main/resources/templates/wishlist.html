@@ -33,7 +33,9 @@
             <p th:text="'Made: ' + ${#temporals.format(wishlist.createdAt, 'dd/MM-yyyy')} + ', ' + ${#lists.size(wishlist.wishes)} + ' wishes'">Made: dato, 0 wishes</p>
         </div>
         <div class="detail-actions">
-            <button type="button" class="share-btn">Share list</button>
+            <a th:href="@{/wishlist/{id}/share-link(id=${wishlist.wishlistId})}" class="share-btn">
+                Share list
+            </a>
             <button type="button" class="edit-btn">Edit</button>
             <button type="button" class="delete-btn">Delete list</button>
         </div>

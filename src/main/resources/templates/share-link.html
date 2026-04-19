@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Del ønskeliste</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<header class="header">
+    <a th:href="@{/}" class="logo">
+        <img src="/images/gift.png" alt="logo">
+        <span>WISHLIST</span>
+    </a>
+
+    <div class="header-icons">
+        <button type="button" class="icon-btn">
+            <img src="/images/bell-ring.png" alt="Notification">
+        </button>
+
+        <button type="button" class="icon-btn">
+            <img src="/images/user-round.png" alt="Profile">
+        </button>
+
+        <button type="button" class="login-btn">Login</button>
+    </div>
+</header>
+
+<main class="page-main">
+    <div class="share-page-wrapper">
+        <section class="share-page-card">
+            <h1 class="share-page-title">Share your wishlist</h1>
+            <p class="share-page-text">Send this link to others:</p>
+
+            <div class="share-link-wrapper">
+                <textarea readonly class="share-link-box" th:text="${shareLink}"></textarea>
+            </div>
+
+            <div class="share-page-actions">
+                <a th:href="${shareLink}" target="_blank" class="share-btn">Open link</a>
+                <a th:href="@{/api/wishlists/{id}(id=${wishlistId})}" class="edit-btn">Back to wishlist</a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <h2>Contact info</h2>
+    <div class="footer-info">
+        <div class="footer-contact">
+            <span>email@example.com</span>
+            <span>+45 12 34 56 78</span>
+        </div>
+
+        <div class="footer-social-group">
+            <button type="button" class="footer-social-btn">Facebook</button>
+            <button type="button" class="footer-social-btn">Instagram</button>
+        </div>
+    </div>
+    <hr>
+    <div class="footer-collaborators">
+        <div class="collaborators-boxes">
+            <h4>Collaborators:</h4>
+            <div class="partner-box">NIKE</div>
+            <div class="partner-box">Apple</div>
+            <div class="partner-box">Zalando</div>
+            <div class="partner-box">Zalando</div>
+            <div class="partner-box">SAMSUNG</div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

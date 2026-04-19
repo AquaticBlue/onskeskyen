@@ -17,12 +17,6 @@ public class ShareController {
         this.wishlistService = wishlistService;
     }
 
-    @GetMapping("/{wishlistId}/share-link")
-    @ResponseBody
-    public String getShareLink(@PathVariable Integer wishlistId) {
-        return wishlistService.generateShareLink(wishlistId);
-    }
-
     @GetMapping("/{username}/share/{wishlistId}")
     public String showSharedWishlist(
             @PathVariable String username,
@@ -37,7 +31,7 @@ public class ShareController {
         return "shared";
     }
 
-    @GetMapping("/wishlist/{wishlistId}/share-link")
+    @GetMapping("/{wishlistId}/share-link")
     public String showShareLinkPage(@PathVariable Integer wishlistId, Model model) {
         String shareLink = wishlistService.generateShareLink(wishlistId);
 
